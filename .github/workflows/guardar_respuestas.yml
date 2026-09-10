@@ -1,0 +1,33 @@
+name: Guardar Respuestas en CSV (Excel)
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  procesar_respuesta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v3
+
+      - name: Extraer respuestas y actualizar CSV
+        run: |
+          BODY="${{ github.event.issue.body }}"
+          
+          FECHA=$(echo "$BODY" | grep "Fecha:" | cut -d':' -f2- | xargs)
+          GENERO=$(echo "$BODY" | grep "Genero:" | cut -d':' -f2- | xargs)
+          EDAD=$(echo "$BODY" | grep "Edad:" | cut -d':' -f2- | xargs)
+          VOCALOID=$(echo "$BODY" | grep "Vocaloid:" | cut -d':' -f2- | xargs)
+          PERSONAJE=$(echo "$BODY" | grep "Personaje:" | cut -d':' -f2- | xargs)
+          ESTUDIO=$(echo "$BODY" | grep "Estudio:" | cut -d':' -f2- | xargs)
+
+          echo "\"$FECHA\",\"$GENERO\",\"$EDAD\",\"$VOCALOID\",\"$PERSONAJE\",\"$ESTUDIO\"" >> respuestas.csv
+
+      - name: Guardar cambios en GitHub
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add respuestas.csv
+          git commit -m "Nueva respuesta agregada a Excel/CSV"
+          git push
