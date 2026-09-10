@@ -224,6 +224,147 @@
             <!-- MARCO 3: Panel del Usuario, Estadísticas y Administración -->
             <div class="marco">
                 <h2>Información y encuesta</h2>
+                <form action="guardar.php" method="POST">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta sobre Vocaloid</title>
+    <!-- Librería SheetJS para exportar a Excel desde el navegador -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f9; 
+            padding: 20px; 
+            color: #333;
+        }
+        .form-container { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            max-width: 450px; 
+            margin: auto; 
+        }
+        h2 { text-align: center; color: #203764; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], input[type="number"], select { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; /* Evita que se salgan del contenedor */
+        }
+        button { 
+            background: #203764; 
+            color: white; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            width: 100%; 
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        button:hover { background: #152542; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
+        .form-container { background: white; padding: 25px; border-radius: 8px; max-width: 450px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color: #203764; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #203764; color: white; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
+        button:hover { background: #152542; }
+        #mensaje { margin-top: 15px; text-align: center; font-weight: bold; color: green; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="encuestaForm">
+        <div class="form-group">
+            <label>1. ¿Qué género eres?</label>
+            <select id="genero" required>
+                <option value="">Selecciona una opción</option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>2. ¿Qué edad tienes?</label>
+            <input type="number" id="edad" min="1" max="100" placeholder="Ej: 18" required>
+        </div>
+
+        <div class="form-group">
+            <label>3. ¿Te gusta Vocaloid?</label>
+            <select id="vocaloid" required>
+                <option value="">Selecciona una opción</option>
+                <option value="Sí">Sí</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>4. ¿Qué personaje te gusta más?</label>
+            <input type="text" id="personaje" placeholder="Ej: Hatsune Miku" required>
+        </div>
+
+        <div class="form-group">
+            <label>5. ¿Dónde estudias?</label>
+            <input type="text" id="estudio" placeholder="Nombre de tu colegio/universidad" required>
+        </div>
+
+        <button type="submit">Enviar Respuestas</button>
+    </form>
+    <div id="mensaje">¡Gracias! Tus respuestas han sido enviadas.</div>
+</div>
+
+<script>
+    document.getElementById('encuestaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const genero = document.getElementById('genero').value;
+        const edad = document.getElementById('edad').value;
+        const vocaloid = document.getElementById('vocaloid').value;
+        const personaje = document.getElementById('personaje').value;
+        const estudio = document.getElementById('estudio').value;
+
+        // Formatear cuerpo para la Issue en GitHub
+        const issueTitle = `Respuesta de Encuesta - ${new Date().toLocaleDateString()}`;
+        const issueBody = `RESPUESTA_DATOS:
+Fecha: ${new Date().toLocaleString()}
+Genero: ${genero}
+Edad: ${edad}
+Vocaloid: ${vocaloid}
+Personaje: ${personaje}
+Estudio: ${estudio}`;
+
+        // Redirigir a la creación automática de Issue en GitHub
+        // Reemplaza 'TU_USUARIO' y 'TU_REPOSITORIO' con tus datos de GitHub
+        const usuario = "TU_USUARIO"; 
+        const repo = "TU_REPOSITORIO"; 
+
+        const url = `https://github.com/${usuario}/${repo}/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`;
+        
+        window.open(url, '_blank');
+        document.getElementById('mensaje').style.display = 'block';
+        document.getElementById('encuestaForm').reset();
+    });
+</script>
+
+</body>
 
 
                 <!-- Panel exclusivo para el administrador -->
@@ -437,5 +578,6 @@
             authOverlay.style.display = 'flex';
         });
     </script>
+    #linck de pa pagina https://oscarjuniorhh.github.io/mipagina1/index.html.html
 </body>
 </html>
